@@ -36,3 +36,9 @@ uogroups:
     groupname: uo-users
     type: user
     gid: 10001
+
+delusers:
+  - name: user
+    username: testuser
+    remove: yes
+    force: yes

@@ -55,3 +55,12 @@
   when: users_create_homedirs and item.profile is defined
   with_items: "{{uousers}}"
   become: yes
+
+- name: Delete users
+  user:
+    name: '{{item.username}}'
+    state: absent
+    remove: "{{item.remove | default(omit)}}"
+    force: "{{item.force | default(omit)}}"
+  with_items: "{{delusers}}"
+  become: yes

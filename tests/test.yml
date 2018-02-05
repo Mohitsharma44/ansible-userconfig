@@ -40,5 +40,11 @@
       type: user
       gid: 10001
 
+    delusers:
+    - name: user
+      username: testuser
+      remove: yes
+      force: yes
+
   roles:
     - role_under_test
