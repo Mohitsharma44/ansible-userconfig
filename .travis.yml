@@ -1,0 +1,33 @@
+---
+
+sudo: required
+dist: xenial
+
+language: python
+python: "2.7"
+
+env:
+  - ANSIBLE_VERSION=latest
+  - ANSIBLE_VERSION=2.2.2.0
+
+branches:
+  only:
+    - master
+
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  # Install Ansible.
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible; else pip install ansible==$ANSIBLE_VERSION; fi
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible-lint; fi
+
+script:
+  # Check the role/playbook's syntax.
+  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+  # Run the role/playbook with ansible-playbook.
+  - ansible-playbook -i tests/inventory tests/test.yml -vvvv
+  # check if the regular user is created or not
+  - id -u testuser | grep -q "no" && (echo "user not found" && exit 1) || (echo "user found" && exit 0)
+  # check if the admin user is created or not
+  - id -u testadmin | grep -q "no" && (echo "user not found" && exit 1) || (echo "user found" && exit 0)
