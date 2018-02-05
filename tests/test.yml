@@ -39,5 +39,6 @@
       groupname: uo-users
       type: user
       gid: 10001
+
   roles:
-    - {role: ../roles/init-host}
+    - role_under_test
