@@ -1,4 +1,4 @@
-Ansible Role for User configuration and more .. 
+Ansible Role for User configuration and more ..
 
 [![Build Status](https://travis-ci.org/Mohitsharma44/ansible-userconfig.svg?branch=master)](https://travis-ci.org/Mohitsharma44/ansible-userconfig)
 
@@ -10,6 +10,7 @@ Role for use with Ubuntu systems. This role will
 - Add users and groups
 - Modify sudoer's for passwordless access for admins (check below for more info)
 - Setup SSH keys and only allow key-based entry (check Role Variables for more info)
+- Delete users (w/ or w/o their home directories)
 
 Requirements
 ------------
@@ -45,6 +46,12 @@ uogroups:
     type: admin
     gid: 10000
 
+delusers:
+  - name: user
+    username: testuser
+    remove: yes
+    force: yes
+
 ```
 For `uousers`, apart from general parameters, you can additionally create a list of
 multiple `groups` that the `uouser` needs to be part of. By default, the uouser
@@ -65,6 +72,8 @@ User's profile can also be customized by adding things such as `alias` etc.
 
 User's default `home` folder can be changed but it is upto you to make sure that
 the path for new `home` directory exists.
+
+When removing the users, passing `force: yes` will delete the user's home dir
 
 Dependencies
 ------------
