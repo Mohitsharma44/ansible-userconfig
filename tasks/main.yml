@@ -1,0 +1,5 @@
+---
+# tasks file for init-host
+
+- include_tasks: update-system.yml
+- include_tasks: user-config.yml

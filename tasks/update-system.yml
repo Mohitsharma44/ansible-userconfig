@@ -1,0 +1,17 @@
+---
+
+- name: Wait 300 seconds for remote host to become usable
+  wait_for_connection:
+    connect_timeout: 5
+    delay: 2
+    sleep: 1
+    timeout: 300
+
+- name: Gather system facts
+  setup:
+
+- name: Update apt cache if needed
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  become: yes

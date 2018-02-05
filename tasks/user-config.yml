@@ -1,0 +1,57 @@
+---
+
+- name: Create user groups
+  group:
+    name: '{{item.groupname}}'
+    gid: '{{item.gid | default(omit)}}'
+  with_items:
+    - '{{uogroups}}'
+  become: yes
+
+- name: Allow passwordless access to admin groups
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%{{item.groupname}}'
+    line: '%{{item.groupname}} ALL=(ALL) NOPASSWD: ALL'
+  when: item.type == 'admin'
+  with_items:
+    - "{{uogroups}}"
+  become: yes
+
+- name: Create users
+  user:
+    name: '{{item.username}}'
+    group: "{{item.group | default('uo-users')}}"
+    groups: "{{item.groups | join(',') if 'groups' in item else ''}}"
+    shell: "{{item.shell if item.shell is defined else users_default_shell}}"
+    password: "{{item.password if item.password is defined else '!'}}"
+    comment: "{{item.name if item.name is defined else ''}}"
+    uid: "{{item.uid | default(omit)}}"
+    home: "{{item.home | default('/home/' + item.username)}}"
+    createhome: "{{'yes' if users_create_homedirs else 'no'}}"
+    generate_ssh_key: "{{item.generate_ssh_key | default('yes')}}"
+  with_items:
+    - "{{uousers}}"
+  become: yes
+
+- name: Setting Authorized keys for users
+  authorized_key:
+    user: '{{item.username}}'
+    state: present
+    key: '{{item.key|default(omit)}}'
+  with_items:
+    - "{{uousers}}"
+  become: yes
+
+- name: Setup user profiles
+  blockinfile:
+    block: "{{item.profile}}"
+    dest: "{{ item.home | default('/home/' + item.username) }}/.profile"
+    owner: "{{item.username}}"
+    group: "{{item.group | default('uo-users')}}"
+    mode: 0644
+    create: true
+  when: users_create_homedirs and item.profile is defined
+  with_items: "{{uousers}}"
+  become: yes
