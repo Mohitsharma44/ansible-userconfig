@@ -1,3 +1,7 @@
+Ansible Role for User configuration and more .. 
+
+[![Build Status](https://travis-ci.org/Mohitsharma44/ansible-userconfig.svg?branch=master)](https://travis-ci.org/Mohitsharma44/ansible-userconfig)
+
 Role Name
 =========
 
