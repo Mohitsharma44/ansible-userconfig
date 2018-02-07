@@ -15,3 +15,21 @@
     update_cache: yes
     cache_valid_time: 3600
   become: yes
+
+- block:
+  - name: Fetching packages
+    set_fact:
+      packages: "{{ lookup('file', item)}}"
+    with_first_found:
+      - "{{role_path}}/vars/{{apt_installs}}"
+      - "{{role_path}}/defaults/{{apt_installs}}"
+
+  - name: Installing Packages
+    apt:
+      name: "{{item}}"
+      state: present
+      update_cache: no
+    with_items:
+      - "{{packages.split('\n')}}"
+  when: apt_installs is defined
+  become: yes

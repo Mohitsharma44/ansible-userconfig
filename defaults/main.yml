@@ -42,3 +42,6 @@ delusers:
     username: testuser
     remove: yes
     force: yes
+
+# If installing packages, filename containing package names
+apt_installs: ubuntu_apt_installs.txt
