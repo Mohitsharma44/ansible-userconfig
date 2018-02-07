@@ -7,6 +7,7 @@ Role Name
 
 Role for use with Ubuntu systems. This role will
 - Update the system
+- Install packages using apt
 - Add users and groups
 - Modify sudoer's for passwordless access for admins (check below for more info)
 - Setup SSH keys and only allow key-based entry (check Role Variables for more info)
@@ -16,7 +17,6 @@ Requirements
 ------------
 
 The Ubuntu system must have python installed and an active internet connection
-(to update the apt cache)
 
 Role Variables
 --------------
@@ -52,7 +52,19 @@ delusers:
     remove: yes
     force: yes
 
+apt_installs: apt_packages.txt
 ```
+
+``` yaml
+# Example of apt_packages.txt
+git
+python-dev
+htop
+```
+
+For installing packages using apt, pass the filename to `apt_installs` and make
+sure it exists.
+
 For `uousers`, apart from general parameters, you can additionally create a list of
 multiple `groups` that the `uouser` needs to be part of. By default, the uouser
 is *not an admin user*. This user doesn't have any sudo-privileges
