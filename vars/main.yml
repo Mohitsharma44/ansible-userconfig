@@ -37,11 +37,12 @@ uogroups:
     type: user
     gid: 10001
 
-delusers:
-  - name: user
-    username: testuser
-    remove: yes
-    force: yes
+#delusers:
+#  - name: user
+#    username: testuser
+#    remove: yes
+#    force: yes
 
 # If installing packages, filename containing package names
 apt_installs: ubuntu_apt_installs.txt
+apt_uninstalls: ubuntu_apt_uninstalls.txt

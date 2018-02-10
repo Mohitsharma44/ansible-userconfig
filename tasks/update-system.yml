@@ -17,7 +17,7 @@
   become: yes
 
 - block:
-  - name: Fetching packages
+  - name: Fetching packages to be installed
     set_fact:
       packages: "{{ lookup('file', item)}}"
     with_first_found:
@@ -33,3 +33,22 @@
       - "{{packages.split('\n')}}"
   when: apt_installs is defined
   become: yes
+
+
+- block:
+  - name: Fetching packages to be removed
+    set_fact:
+      packages: "{{lookup ('file', item)}}"
+    with_first_found:
+      - "{{role_path}}/vars/{{apt_uninstalls}}"
+      - "{{role_path}}/defaults/{{apt_uninstalls}}"
+
+  - name: Removing Packages
+    apt:
+      name: "{{item}}"
+      state: absent
+      update_cache: no
+    with_items:
+      - "{{packages.split('\n')}}"
+    when: apt_uninstalls is defined
+    become: yes

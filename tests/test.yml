@@ -7,6 +7,8 @@
   vars:
     users_default_shell: /bin/bash
     users_create_homedirs: true
+    apt_installs: ubuntu_apt_installs.txt
+    apt_uninstalls: ubuntu_apt_uninstalls.txt
     uousers:
     - name: admin
       username: testadmin
@@ -40,11 +42,11 @@
       type: user
       gid: 10001
 
-    delusers:
-    - name: user
-      username: testuser
-      remove: yes
-      force: yes
+    #delusers:
+    #- name: user
+    #  username: testuser
+    #  remove: yes
+    #  force: yes
 
   roles:
     - role_under_test

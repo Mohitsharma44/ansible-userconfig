@@ -34,6 +34,7 @@
   with_items:
     - "{{uousers}}"
   become: yes
+  when: uousers is defined
 
 - name: Setting Authorized keys for users
   authorized_key:
@@ -64,3 +65,4 @@
     force: "{{item.force | default(omit)}}"
   with_items: "{{delusers}}"
   become: yes
+  when: delusers is defined
