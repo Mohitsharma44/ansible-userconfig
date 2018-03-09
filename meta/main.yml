@@ -1,6 +1,6 @@
 galaxy_info:
   author: Mohit Sharma
-  description: Developer evagelist
+  description: Ansible role for installing packages and setting up users. Init-like system for UO servers
   company: NYU CUSP
 
   # If the issue tracker for your role is not on github, uncomment the
