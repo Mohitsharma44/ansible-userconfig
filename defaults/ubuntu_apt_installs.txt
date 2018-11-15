@@ -1,3 +1,4 @@
+curl
 openssh-server
 python-pip
 emacs
@@ -11,8 +12,6 @@ tmux
 postgresql
 postgresql-contrib
 sshfs
-python-pyqt5
-python-qt4
 python-pycurl
 libncurses-dev
 supervisor

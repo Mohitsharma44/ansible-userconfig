@@ -22,7 +22,7 @@ neutral='\033[0m'
 timestamp=$(date +%s)
 
 # Allow environment variables to override defaults.
-distro=${distro:-"ubuntu1604"}
+distro=${distro:-"ubuntu1404"}
 playbook=${playbook:-"test.yml"}
 cleanup=${cleanup:-"true"}
 container_id=${container_id:-$timestamp}
